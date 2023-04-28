@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./components/Main";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import Students from "./components/Students";
+import Teachers from "./components/Teachers";
+import { useState } from "react";
 function App() {
+  const [toggler,setToggler] = useState(true);
+  const Toggle = ()=>{
+    setToggler(!toggler);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <BrowserRouter>
+    <div className="d-flex">
+      <div className={toggler?"w-auto d-flex":"d-none"}>
+          <Sidebar/>
+      </div>
+      <div className="col">
+      <Navbar Toggle={Toggle}/>
+      <Routes>
+        <Route path="/" element={<Main/>}></Route>
+        <Route path="/student" element={<><Students/></>}></Route>
+        <Route path="/teacher" element={<><Teachers/></>}></Route>
+      </Routes>
     </div>
+    </div>
+    </BrowserRouter>
+    </>
   );
 }
 
